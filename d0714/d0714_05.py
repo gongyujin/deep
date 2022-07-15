@@ -25,17 +25,20 @@ model=keras.Sequential()
 model.add(keras.layers.Flatten(input_shape=(28,28)))
 model.add(keras.layers.Dense(100,activation='relu'))
 # 규제를 통한 train 정확도를 낮춤
-model.add(keras.layers.Dropout(0.3))
+model.add(keras.layers.Dropout(0.3)) # 30프로 제외
 model.add(keras.layers.Dense(10,activation='softmax'))
 
+# - 손실곡선은 history를 볼 수 있음
 model.summary()
+## None,100 => None : 배치사이즈를 정해줌 
 
 # 설정
 model.compile(optimizer='adam',loss='sparse_categorical_crossentropy'\
     ,metrics='accuracy')
 
-# 훈련
+# 훈련 
 history=model.fit(sub_scaled,sub_label,epochs=20,validation_data=(val_scaled,val_label))
+
 
 # 그래프
 plt.plot(history.history['loss'])
